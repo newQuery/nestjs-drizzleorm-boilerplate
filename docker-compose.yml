@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: drizzle
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  nestjs:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: development
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - postgres
